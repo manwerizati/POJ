@@ -1,3 +1,15 @@
+/*
+Zaimplementuj klasę Student, do przechowywania imienia, nazwiska, numer indeksu i obecność
+(wyrażonej w procentach) oceny z POJ (typu int).
+Jeżeli podczas tworzenia obiektu nie zostało przekazane imię i nazwisko, pola
+powinny być ustawione wartością "Unknown".
+Dodaj odpowiednie metody set i get do wszystkich pól klasy.
+Jeżeli obecnocność jest mniejsza niż 50%, student powinien otrzymać ocenę 2.
+Przetestuj program, tworząc trzy różne obiekty klasy Student.
+
+Dominik Borzyszkowski, s35498
+ */
+
 class Main {
     public static void main(String[] args) {
         Student student = new Student("marek", "kowalski", "s34534", 70, 4);

@@ -1,3 +1,11 @@
+/* Zaimplementuj klasę Card reprezentującą pojedynczą kartę do gry z talii kart.
+Klasa powinna przechowywać wartość i kolor: kier, karo, pik, trefl.
+W zadaniu użyj typu wyliczeniowego.
+Napisz program testujący, który stworzy trzy różne obiekty klasy Card.
+
+Dominik Borzyszkowski, s35498
+ */
+
 public class Main {
     public static void main(String[] args) {
         Card card1 = new Card("As", Suit.KIER);
