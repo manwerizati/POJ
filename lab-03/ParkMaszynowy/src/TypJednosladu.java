@@ -1,0 +1,3 @@
+public enum TypJednosladu {
+    ROWER, HULAJNOGA, HULAJNOGA_ELEKTRYCZNA, MOTOCYKL, SKUTER
+}

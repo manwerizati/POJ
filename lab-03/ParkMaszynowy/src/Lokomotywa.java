@@ -2,7 +2,7 @@ public class Lokomotywa extends Maszyna {
     private int iloscWagonow;
     private String przewoznik;
 
-    public Lokomotywa(String marka, String nazwa, int pojemnoscSilnika, rodzajSilnika rodzajSilnika, int iloscWagonow, String przewoznik) {
+    public Lokomotywa(String marka, String nazwa, int pojemnoscSilnika, RodzajSilnika rodzajSilnika, int iloscWagonow, String przewoznik) {
         super(marka, nazwa, pojemnoscSilnika, rodzajSilnika);
         this.iloscWagonow = iloscWagonow;
         this.przewoznik = przewoznik;
