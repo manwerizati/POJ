@@ -1,13 +1,72 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import airlines.*;
+import adapters.*;
+import core.*;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        UATicketService uaMockService = new UATicketService() {
+            @Override
+            public List<UATicketInfo> getTicketInfo(String from, String to, Date when) {
+                return List.of(
+                        new UATicketInfo(from, to, when, 2500.0),
+                        new UATicketInfo(from, to, when, 1800.0)
+                );
+            }
+        };
+
+        BATicketService baMockService = new BATicketService() {
+            @Override
+            public List<BATicket> getTicketInfo(Airport from, Airport to, Date when) {
+                return List.of(
+                        new BATicket(when, 3000.0),
+                        new BATicket(when, 1200.0)
+                );
+            }
+        };
+
+        FlightSearchProvider unitedAdapter = new UAAdapter(uaMockService);
+        FlightSearchProvider britishAdapter = new BATAdapter(baMockService);
+
+        List<FlightTicket> allTickets = new ArrayList<>();
+
+        allTickets.addAll(unitedAdapter.searchFlights("Warszawa", "Nowy Jork"));
+        allTickets.addAll(britishAdapter.searchFlights("Warszawa", "Nowy Jork"));
+
+        printOutTickets(allTickets);
+
+        List<FlightTicket> sortedTickets = new ArrayList<>(allTickets);
+
+        for (int i = 0; i < sortedTickets.size() - 1; i++) {
+            for (int j = 0; j < sortedTickets.size() - 1 - i; j++) {
+                if (sortedTickets.get(j).price > sortedTickets.get(j + 1).price) {
+                    FlightTicket temp = sortedTickets.get(j);
+                    sortedTickets.set(j, sortedTickets.get(j + 1));
+                    sortedTickets.set(j + 1, temp);
+                }
+            }
+        }
+
+        printOutTickets(sortedTickets);
+
+        List<FlightTicket> cheapTickets = new ArrayList<>();
+
+        for (FlightTicket ticket : allTickets) {
+            if (ticket.price < 2000.0) {
+                cheapTickets.add(ticket);
+            }
+        }
+
+        printOutTickets(cheapTickets);
+    }
+
+    private static void printOutTickets(List<FlightTicket> tickets) {
+        for (FlightTicket ticket : tickets) {
+            System.out.printf("Lot: %s -> %s, Cena: %6.2f PLN, Przesiadki: %d, Czas: %d min\n",
+                    ticket.from, ticket.to, ticket.price, ticket.numberOfStops, ticket.flightDuration);
+        }
     }
 }
